@@ -4,7 +4,7 @@ import { Request } from "express";
 export class AuthService {
   authenticate(req: Request) {
     const ip = req.socket.remoteAddress;
-    
+
     logger.info(req)
     const password = req.query.password;
     logger.info(`authenticating password ${password} by ip ${ip}`);
