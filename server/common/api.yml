@@ -1,0 +1,127 @@
+openapi: 3.0.1
+info:
+  title: ITMOptics
+  description: API for ITMO history project
+  version: 1.0.0
+
+servers:
+  - url: /api/v1
+tags:
+  - name: Exhibits
+    description: Simple exhibit endpoints
+  - name: Specification
+    description: The swagger API specification
+
+paths:
+  /exhibits:
+    get:
+      tags:
+        - Exhibits
+      description: Fetch all exhibits
+      responses:
+        200:
+          description: Returns all exhibits
+
+    post:
+      tags:
+        - Exhibits
+      description: Create a new exhibit
+      parameters:
+        - name: password
+          in: query
+          description: Admin password
+          required: true
+          schema:
+            type: string
+
+      requestBody:
+        description: an exhibit
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ExhibitBody"
+        required: true
+      responses:
+        201:
+          description: Exhibit created
+        401:
+          description: You are not authenticated
+
+  /exhibits/{id}:
+    get:
+      tags:
+        - Exhibits
+      parameters:
+        - name: id
+          in: path
+          description: The id of the exhibit to retrieve
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Return the exhibit with the specified id
+        404:
+          description: Exhibit not found
+
+    delete:
+      tags:
+        - Exhibits
+      description: Destroy an exhibit
+      parameters:
+        - name: id
+          in: path
+          description: The id of the exhibit to destroy
+          required: true
+          schema:
+            type: integer
+        - name: password
+          in: query
+          description: Admin password
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: Exhibit successfully destroyed
+        401:
+          description: You are not authenticated
+        409:
+          description: Cannot destroy exhibit
+  /spec:
+    get:
+      tags:
+        - Specification
+      responses:
+        200:
+          description: Return the API specification
+          content: {}
+
+components:
+  schemas:
+    Exhibit:
+      title: exhibit
+      required:
+        - id
+        - name
+        - createdAt
+        - updatedAt
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        createdAt:
+          type: string
+        updatedAt:
+          type: string
+
+    ExhibitBody:
+      title: exhibit body
+      required:
+        - name
+      type: object
+      properties:
+        name:
+          type: string

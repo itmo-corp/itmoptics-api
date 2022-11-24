@@ -7,15 +7,14 @@ API for ITMO history project.
 2. [Running](#running)
     1. [Development](#run-dev)
     2. [Production](#run-prod)
-3. [Testing](#testing)
-4. [Linting](#linting)
-5. [Contributing](#contributing)
-6. [Code of Conduct](#code-of-conduct)
-7. [License](#license)
+3. [Linting](#linting)
+4. [Contributing](#contributing)
+5. [Code of Conduct](#code-of-conduct)
+6. [License](#license)
 
 ## Getting Started <a name="getting-started"></a>
 
-You need to create a `.env` file and configure your database at first, then set up the database and start developing / testing.
+You need to create a `.env` file and configure your database at first, then set up the database and start developing.
 
 ```shell
 # install deps
@@ -23,9 +22,6 @@ yarn install
 
 # run in development mode
 yarn dev
-
-# run tests
-yarn test
 
 # check code styles
 yarn lint
@@ -55,22 +51,6 @@ Compiles the application and starts it in production mode
 ```shell
 yarn compile
 yarn start
-```
-
-## Testing <a name="testing"></a>
-
-Run the Mocha unit tests
-
-```shell
-yarn test
-# or
-yarn test:debug
-```
-
-Run the tests and output a JUnit-style XML test results file at `./test/test-results.xml`
-
-```shell
-yarn test:junit
 ```
 
 ## Linting <a name="linting"></a>

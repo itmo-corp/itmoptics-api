@@ -11,5 +11,5 @@ node_modules
 !.vscode/launch.json
 !.vscode/extensions.json
 
-# Mocha test results
-test/test-results.xml
+# SQLite Database
+db
