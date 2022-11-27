@@ -103,14 +103,17 @@ components:
       title: exhibit
       required:
         - id
-        - name
+        - title
+        - text
         - createdAt
         - updatedAt
       type: object
       properties:
         id:
           type: integer
-        name:
+        title:
+          type: string
+        text:
           type: string
         createdAt:
           type: string
@@ -120,8 +123,11 @@ components:
     ExhibitBody:
       title: exhibit body
       required:
-        - name
+        - title
+        - text
       type: object
       properties:
-        name:
+        title:
+          type: string
+        text:
           type: string

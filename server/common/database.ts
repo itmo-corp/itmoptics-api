@@ -30,5 +30,13 @@ export default class Database implements IDatabase {
       .catch((err) => {
         logger.info(`Database synchronization error: ${err}`);
       })
+
+    this.database.sync({ alter: true })
+      .then(() => {
+        logger.info("Database alter synchronized.");
+      })
+      .catch((err) => {
+        logger.info(`Database alter synchronization error: ${err}`);
+      })
   }
 }

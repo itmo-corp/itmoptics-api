@@ -3,7 +3,8 @@ import sequelize from "../../common/sequelize";
 
 export default class Exhibit extends Model<InferAttributes<Exhibit>, InferCreationAttributes<Exhibit>> {
   id: number;
-  name: string;
+  title: string;
+  text: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -14,9 +15,13 @@ Exhibit.init({
     autoIncrement: true,
     primaryKey: true
   },
-  name: {
+  title: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  text: {
+     type: DataTypes.TEXT,
+     allowNull: false,
   },
   createdAt: DataTypes.DATE,
   updatedAt: DataTypes.DATE,
