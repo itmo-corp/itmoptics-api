@@ -31,7 +31,7 @@ export class Controller {
       if (auth) return res.status(401).json(auth);
 
       const exhibit = await ExhibitsService.create(req.body);
-      return res.status(201).json(exhibit).location(`/api/v1/exhibits/${exhibit.id}`).end();
+      return res.status(201).json(exhibit).location(`/itmoptics/api/v1/exhibits/${exhibit.id}`).end();
     } catch (err) {
       return next(err);
     }

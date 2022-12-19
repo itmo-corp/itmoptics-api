@@ -24,7 +24,7 @@ export default class ExpressServer {
     app.use(express.json({ limit: limit }));
     app.use(express.urlencoded({ extended: true, limit: limit }));
     app.use(express.text({ limit: limit }));
-    app.use(express.static(`${root}/public`));
+    app.use("/itmoptics/", express.static(`${root}/public`));
 
     app.use(cookieParser(process.env.SESSION_SECRET));
 
