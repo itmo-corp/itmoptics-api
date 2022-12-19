@@ -2,7 +2,7 @@ openapi: 3.0.1
 info:
   title: ITMOptics
   description: API for ITMO history project
-  version: 1.0.0
+  version: 1.0.1
 
 servers:
   - url: /api/v1
@@ -17,14 +17,30 @@ paths:
     get:
       tags:
         - Exhibits
+      summary: Fetch all exhibits
       description: Fetch all exhibits
       responses:
         200:
           description: Returns all exhibits
-
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exhibits'
+              example:
+                - id: 1
+                  title: Bla
+                  text: Lorem ipsum...
+                  createdAt: "2022-11-27T16:10:26.507Z"
+                  updatedAt: "2022-11-27T16:10:26.507Z"
+                - id: 4
+                  title: Hasta la vista, baby
+                  text: I need your clothes, your boots and your motorcycle.
+                  createdAt: "1984-10-26T11:40:24.007Z"
+                  updatedAt: "1991-12-25T19:00:21.155Z"
     post:
       tags:
         - Exhibits
+      summary: Adds a new exhibit
       description: Create a new exhibit
       parameters:
         - name: password
@@ -33,6 +49,7 @@ paths:
           required: true
           schema:
             type: string
+            example: Qwerty123
 
       requestBody:
         description: an exhibit
@@ -40,17 +57,40 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/ExhibitBody"
+            example:
+              title: New amazing Exhibit
+              text: bla-bla-bla
         required: true
+
       responses:
         201:
           description: Exhibit created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exhibit'
+              example:
+                id: 1
+                title: New amazing Exhibit
+                text: bla-bla-bla. Created just now
+                createdAt: "2022-12-03T16:10:26.507Z"
+                updatedAt: "2022-12-03T16:10:26.507Z"
         401:
-          description: You are not authenticated
+          description: You're not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                errors:
+                  - message: You're not authenticated
 
   /exhibits/{id}:
     get:
       tags:
         - Exhibits
+      summary: Fetch exhibit by id
+      description: Fetch exhibit by id
       parameters:
         - name: id
           in: path
@@ -58,15 +98,34 @@ paths:
           required: true
           schema:
             type: integer
+            example: 1
       responses:
         200:
           description: Return the exhibit with the specified id
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Exhibit'
+              example:
+                id: 1
+                title: Lorem ipsum dolor sit amet
+                text: Vivamus vitae lorem velit. Maecenas finibus consectetur viverra.
+                createdAt: "2022-12-03T16:10:26.507Z"
+                updatedAt: "2022-12-03T16:10:26.507Z"
         404:
           description: Exhibit not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                errors:
+                  - message: Exhibit not found
 
     delete:
       tags:
         - Exhibits
+      summary: Destroy an exhibit by id
       description: Destroy an exhibit
       parameters:
         - name: id
@@ -75,23 +134,41 @@ paths:
           required: true
           schema:
             type: integer
+            example: 1
         - name: password
           in: query
           description: Admin password
-          required: false
+          required: true
           schema:
             type: string
+            example: Qwerty123
       responses:
         200:
           description: Exhibit successfully destroyed
         401:
-          description: You are not authenticated
+          description: You're not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                errors:
+                  - message: You're not authenticated
         409:
-          description: Cannot destroy exhibit
+          description: Exhibit cannot be destroyed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                errors:
+                  - message: Exhibit cannot be destroyed
   /spec:
     get:
       tags:
         - Specification
+      summary: OpenAPI specification of ITMOptics API
+      description: OpenAPI specification of ITMOptics API
       responses:
         200:
           description: Return the API specification
@@ -100,7 +177,7 @@ paths:
 components:
   schemas:
     Exhibit:
-      title: exhibit
+      title: Exhibit
       required:
         - id
         - title
@@ -120,8 +197,13 @@ components:
         updatedAt:
           type: string
 
+    Exhibits:
+      type: array
+      items:
+        $ref: '#/components/schemas/Exhibit'
+
     ExhibitBody:
-      title: exhibit body
+      title: Exhibit Body
       required:
         - title
         - text
@@ -131,3 +213,19 @@ components:
           type: string
         text:
           type: string
+
+    Error:
+      title: Error
+      required:
+        - errors
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            required:
+              - message
+            properties:
+              message:
+                type: string
