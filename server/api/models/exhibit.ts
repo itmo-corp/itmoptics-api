@@ -5,6 +5,7 @@ export default class Exhibit extends Model<InferAttributes<Exhibit>, InferCreati
   id: number;
   title: string;
   text: string;
+  image: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +17,10 @@ Exhibit.init({
     primaryKey: true
   },
   title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  image: {
     type: DataTypes.STRING,
     allowNull: false,
   },

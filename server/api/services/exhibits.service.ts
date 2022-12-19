@@ -19,7 +19,7 @@ export class ExhibitsService {
 
   async create(data): Promise<Exhibit> {
     logger.info(`create exhibit with data ${data}`);
-    return await Exhibit.create({ title: data.title, text: data.text });
+    return await Exhibit.create({ title: data.title, image: data.image, text: data.text });
   }
 }
 
