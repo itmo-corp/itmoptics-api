@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import logger from "./logger";
 import morgan from "morgan";
 import { IDatabase } from "./database";
-
+import cors from "cors";
 import errorHandler from "../api/middlewares/error.handler";
 
 const app = express();
@@ -19,6 +19,7 @@ export default class ExpressServer {
 
     app.set("appPath", root + "client");
     app.use(morgan("dev"));
+    app.use(cors());
 
     app.use(express.json({ limit: limit }));
     app.use(express.urlencoded({ extended: true, limit: limit }));
